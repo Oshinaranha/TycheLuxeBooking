@@ -88,9 +88,12 @@ export default function LuxuryVehicleShowcase() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="p-1 bg-gradient-to-r from-[#333333] via-[#D4AF37] to-[#333333] rounded-lg">
-              <div className="bg-[#111111] rounded-lg p-8 h-[500px] flex items-center justify-center">
-                <LuxuryVehicleModel vehicleType={activeVehicle} className="h-full" />
+            <div className="p-1 bg-gradient-to-r from-[#333333] via-[#D4AF37] to-[#333333] rounded-lg shadow-2xl">
+              <div className="bg-[#111111] rounded-lg p-8 h-[600px] flex items-center justify-center relative">
+                <div className="absolute inset-0 opacity-10 overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-full bg-grid-white-pattern rotate-12"></div>
+                </div>
+                <LuxuryVehicleModel vehicleType={activeVehicle} className="h-full w-full" />
               </div>
             </div>
           </motion.div>
