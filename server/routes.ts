@@ -79,8 +79,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create a booking record with the parsed data
       const booking = await storage.createBooking({
         serviceType: bookingData.serviceType,
-        startDate: new Date(bookingData.startDate),
-        endDate: new Date(bookingData.endDate),
+        startDate: bookingData.startDate,
+        endDate: bookingData.endDate,
         departureLocation: bookingData.departureLocation,
         destination: bookingData.destination,
         guests: bookingData.guests,

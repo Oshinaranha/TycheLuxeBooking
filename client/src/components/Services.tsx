@@ -3,7 +3,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Service } from "@shared/schema";
 import { ServiceCard } from "@/components/ui/service-card";
 import { Link } from "wouter";
+import { MagicButton } from "@/components/ui/magic-button";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 export default function Services() {
   const { toast } = useToast();
@@ -12,13 +14,15 @@ export default function Services() {
     queryKey: ['/api/services'],
   });
   
-  if (error) {
-    toast({
-      variant: "destructive",
-      title: "Error",
-      description: "Failed to load services. Please try again.",
-    });
-  }
+  useEffect(() => {
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to load services. Please try again.",
+      });
+    }
+  }, [error, toast]);
   
   // Filter services by type
   const jets = services?.filter(service => service.type === 'jet').slice(0, 1);
@@ -82,20 +86,32 @@ export default function Services() {
           className="text-center mt-12"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Link href="/services/jet">
-              <a className="inline-block border-2 border-[#D4AF37] hover:bg-[#D4AF37] text-[#F4F4F4] hover:text-[#0D0D0D] px-6 py-3 rounded text-sm uppercase font-medium tracking-wider transition-all duration-300">
+            <Link href="/services/jet" className="block">
+              <MagicButton 
+                variant="outline" 
+                className="w-full uppercase tracking-widest text-sm"
+                glowColor="rgba(212, 175, 55, 0.4)"
+              >
                 View All Jets
-              </a>
+              </MagicButton>
             </Link>
-            <Link href="/services/yacht">
-              <a className="inline-block border-2 border-[#D4AF37] hover:bg-[#D4AF37] text-[#F4F4F4] hover:text-[#0D0D0D] px-6 py-3 rounded text-sm uppercase font-medium tracking-wider transition-all duration-300">
+            <Link href="/services/yacht" className="block">
+              <MagicButton 
+                variant="outline" 
+                className="w-full uppercase tracking-widest text-sm"
+                glowColor="rgba(112, 175, 232, 0.4)"
+              >
                 View All Yachts
-              </a>
+              </MagicButton>
             </Link>
-            <Link href="/services/car">
-              <a className="inline-block border-2 border-[#D4AF37] hover:bg-[#D4AF37] text-[#F4F4F4] hover:text-[#0D0D0D] px-6 py-3 rounded text-sm uppercase font-medium tracking-wider transition-all duration-300">
+            <Link href="/services/car" className="block">
+              <MagicButton 
+                variant="outline" 
+                className="w-full uppercase tracking-widest text-sm"
+                glowColor="rgba(212, 55, 55, 0.4)"
+              >
                 View All Cars
-              </a>
+              </MagicButton>
             </Link>
           </div>
         </motion.div>

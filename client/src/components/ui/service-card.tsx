@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Service } from "@shared/schema";
 import { servicePricing, serviceBookingText } from "@/lib/constants";
+import { MagicCard } from "@/components/ui/magic-card";
+import { MagicButton } from "@/components/ui/magic-button";
 
 interface ServiceCardProps {
   service: Service;
@@ -35,16 +37,25 @@ export function ServiceCard({ service }: ServiceCardProps) {
     car: "EXOTIC CAR"
   }[service.type];
 
+  // Different glow colors for different service types
+  const glowColors = {
+    jet: "rgba(212, 175, 55, 0.4)",
+    yacht: "rgba(112, 175, 232, 0.4)",
+    car: "rgba(212, 55, 55, 0.4)",
+  };
+  
   return (
-    <div 
+    <MagicCard 
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative glass-card rounded-none overflow-hidden transition-all duration-500 h-full border-0 shadow-xl flex flex-col"
+      aspectRatio="portrait"
+      glowColor={glowColors[service.type as keyof typeof glowColors] || glowColors.jet}
+      className="h-full"
     >
       {/* Type Label */}
       <div className="absolute top-4 left-0 z-10">
-        <div className="bg-[#0D0D0D]/80 backdrop-blur-sm px-4 py-1 border-r border-[#D4AF37]/30">
-          <span className="text-xs tracking-widest font-montserrat text-[#D4AF37]/80">
+        <div className="magic-border bg-black/80 backdrop-blur-sm px-4 py-1 border-r border-[#D4AF37]/30">
+          <span className="text-xs tracking-widest font-montserrat magic-text">
             {typeLabel}
           </span>
         </div>
@@ -68,7 +79,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
           alt={service.name}
           className="object-cover h-full w-full"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D] via-[#0D0D0D]/40 to-transparent opacity-80"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-80"></div>
         
         {/* Gold decorative line */}
         <motion.div 
@@ -78,16 +89,16 @@ export function ServiceCard({ service }: ServiceCardProps) {
         />
         
         <div className="absolute bottom-4 left-6">
-          <h3 className="text-[#F4F4F4] text-2xl font-playfair font-medium mb-1">
+          <h3 className="text-white text-2xl font-playfair font-medium mb-1 magic-text">
             {service.name}
           </h3>
         </div>
       </div>
       
       {/* Content Section */}
-      <div className="flex-grow p-6 sm:p-8 flex flex-col justify-between">
+      <div className="flex-grow p-6 sm:p-8 flex flex-col justify-between bg-black/30 backdrop-blur-sm">
         {/* Description */}
-        <p className="text-[#F4F4F4]/80 mb-6 font-montserrat text-sm leading-relaxed">
+        <p className="text-white/80 mb-6 font-montserrat text-sm leading-relaxed">
           {service.description}
         </p>
         
@@ -97,10 +108,10 @@ export function ServiceCard({ service }: ServiceCardProps) {
         {/* Details */}
         <div className="mb-8">
           <div className="flex justify-between items-end mb-4">
-            <span className="text-[#F4F4F4]/60 text-xs uppercase tracking-widest font-montserrat">Starting from</span>
-            <span className="text-gold-gradient text-xl font-medium font-cormorant">{priceLabel}</span>
+            <span className="text-white/60 text-xs uppercase tracking-widest font-montserrat">Starting from</span>
+            <span className="magic-text text-xl font-medium font-cormorant">{priceLabel}</span>
           </div>
-          <div className="grid grid-cols-2 gap-4 text-xs text-[#F4F4F4]/70 font-montserrat">
+          <div className="grid grid-cols-2 gap-4 text-xs text-white/70 font-montserrat">
             <div className="flex items-center">
               <div className="w-1 h-1 rounded-full bg-[#D4AF37] mr-2"></div>
               <span>{capacityLabel}</span>
@@ -113,17 +124,17 @@ export function ServiceCard({ service }: ServiceCardProps) {
         </div>
         
         {/* CTA Button */}
-        <Link 
-          href={`/service/${service.id}`}
-          className="group inline-flex items-center justify-between bg-transparent border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/10 px-6 py-3 text-sm uppercase tracking-wider font-medium transition-all duration-500 overflow-hidden relative"
-        >
-          <span className="z-10">{bookingText}</span>
-          <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
-          
-          {/* Animated shine effect */}
-          <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-10 group-hover:animate-shine" />
+        <Link href={`/service/${service.id}`} className="block">
+          <MagicButton
+            variant="outline"
+            className="w-full justify-between uppercase tracking-widest text-sm"
+            glowColor={glowColors[service.type as keyof typeof glowColors]}
+          >
+            <span>{bookingText}</span>
+            <ArrowUpRight className="ml-2 h-4 w-4" />
+          </MagicButton>
         </Link>
       </div>
-    </div>
+    </MagicCard>
   );
 }

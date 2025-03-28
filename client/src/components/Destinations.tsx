@@ -3,7 +3,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Destination } from "@shared/schema";
 import { DestinationCard } from "@/components/ui/destination-card";
 import { Button } from "@/components/ui/button";
+import { MagicButton } from "@/components/ui/magic-button";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 export default function Destinations() {
   const { toast } = useToast();
@@ -12,13 +14,15 @@ export default function Destinations() {
     queryKey: ['/api/destinations'],
   });
   
-  if (error) {
-    toast({
-      variant: "destructive",
-      title: "Error",
-      description: "Failed to load destinations. Please try again.",
-    });
-  }
+  useEffect(() => {
+    if (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to load destinations. Please try again.",
+      });
+    }
+  }, [error, toast]);
   
   return (
     <section id="destinations" className="py-20 bg-[#0F2C4D]">

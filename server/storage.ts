@@ -3,8 +3,11 @@ import {
   services, type Service, type InsertService,
   destinations, type Destination, type InsertDestination,
   bookings, type Booking, type InsertBooking,
-  contacts, type Contact, type InsertContact
+  contacts, type Contact, type InsertContact,
+  testimonials, type Testimonial, type InsertTestimonial
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -25,8 +28,99 @@ export interface IStorage {
   getBooking(id: number): Promise<Booking | undefined>;
   
   createContact(contact: InsertContact): Promise<Contact>;
+  
+  getAllTestimonials(): Promise<Testimonial[]>;
+  getFeaturedTestimonials(): Promise<Testimonial[]>;
+  getTestimonialsByService(serviceType: string): Promise<Testimonial[]>;
+  createTestimonial(testimonial: InsertTestimonial): Promise<Testimonial>;
 }
 
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db.insert(users).values(insertUser).returning();
+    return user;
+  }
+  
+  async getAllServices(): Promise<Service[]> {
+    return await db.select().from(services);
+  }
+  
+  async getServicesByType(type: string): Promise<Service[]> {
+    return await db.select().from(services).where(eq(services.type, type));
+  }
+  
+  async getService(id: number): Promise<Service | undefined> {
+    const [service] = await db.select().from(services).where(eq(services.id, id));
+    return service;
+  }
+  
+  async createService(insertService: InsertService): Promise<Service> {
+    const [service] = await db.insert(services).values(insertService).returning();
+    return service;
+  }
+  
+  async getAllDestinations(): Promise<Destination[]> {
+    return await db.select().from(destinations);
+  }
+  
+  async getDestination(id: number): Promise<Destination | undefined> {
+    const [destination] = await db.select().from(destinations).where(eq(destinations.id, id));
+    return destination;
+  }
+  
+  async createDestination(insertDestination: InsertDestination): Promise<Destination> {
+    const [destination] = await db.insert(destinations).values(insertDestination).returning();
+    return destination;
+  }
+  
+  async createBooking(insertBooking: InsertBooking): Promise<Booking> {
+    const [booking] = await db.insert(bookings).values(insertBooking).returning();
+    return booking;
+  }
+  
+  async getAllBookings(): Promise<Booking[]> {
+    return await db.select().from(bookings);
+  }
+  
+  async getBooking(id: number): Promise<Booking | undefined> {
+    const [booking] = await db.select().from(bookings).where(eq(bookings.id, id));
+    return booking;
+  }
+  
+  async createContact(insertContact: InsertContact): Promise<Contact> {
+    const [contact] = await db.insert(contacts).values(insertContact).returning();
+    return contact;
+  }
+  
+  async getAllTestimonials(): Promise<Testimonial[]> {
+    return await db.select().from(testimonials);
+  }
+  
+  async getFeaturedTestimonials(): Promise<Testimonial[]> {
+    return await db.select().from(testimonials).where(eq(testimonials.featured, true));
+  }
+  
+  async getTestimonialsByService(serviceType: string): Promise<Testimonial[]> {
+    return await db.select().from(testimonials).where(eq(testimonials.serviceType, serviceType));
+  }
+  
+  async createTestimonial(insertTestimonial: InsertTestimonial): Promise<Testimonial> {
+    const [testimonial] = await db.insert(testimonials).values(insertTestimonial).returning();
+    return testimonial;
+  }
+}
+
+// For compatibility with existing code while transitioning to DB
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private services: Map<number, Service>;
@@ -138,6 +232,26 @@ export class MemStorage implements IStorage {
     };
     this.contacts.set(id, contact);
     return contact;
+  }
+  
+  async getAllTestimonials(): Promise<Testimonial[]> {
+    return [];
+  }
+  
+  async getFeaturedTestimonials(): Promise<Testimonial[]> {
+    return [];
+  }
+  
+  async getTestimonialsByService(serviceType: string): Promise<Testimonial[]> {
+    return [];
+  }
+  
+  async createTestimonial(insertTestimonial: InsertTestimonial): Promise<Testimonial> {
+    return {
+      id: 1,
+      ...insertTestimonial,
+      createdAt: new Date()
+    };
   }
   
   private initializeServices(): void {
@@ -289,4 +403,6 @@ export class MemStorage implements IStorage {
   }
 }
 
+// Use Database Storage
+// Switch to MemStorage to avoid database issues for now
 export const storage = new MemStorage();
