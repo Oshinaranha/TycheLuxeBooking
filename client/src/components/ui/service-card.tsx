@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { Card } from "@/components/ui/card";
+import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Service } from "@shared/schema";
 import { servicePricing, serviceBookingText } from "@/lib/constants";
@@ -28,43 +28,102 @@ export function ServiceCard({ service }: ServiceCardProps) {
   
   const bookingText = serviceBookingText[service.type as keyof typeof serviceBookingText];
   
+  // Service type label with appropriate icon
+  const typeLabel = {
+    jet: "PRIVATE JET",
+    yacht: "LUXURY YACHT", 
+    car: "EXOTIC CAR"
+  }[service.type];
+
   return (
-    <Card 
+    <div 
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="bg-[#333333] rounded-lg overflow-hidden shadow-lg transition-all duration-300 h-full border-0"
+      className="group relative glass-card rounded-none overflow-hidden transition-all duration-500 h-full border-0 shadow-xl flex flex-col"
     >
-      <div className="relative h-64">
+      {/* Type Label */}
+      <div className="absolute top-4 left-0 z-10">
+        <div className="bg-[#0D0D0D]/80 backdrop-blur-sm px-4 py-1 border-r border-[#D4AF37]/30">
+          <span className="text-xs tracking-widest font-montserrat text-[#D4AF37]/80">
+            {typeLabel}
+          </span>
+        </div>
+      </div>
+      
+      {/* Image Section */}
+      <div className="relative h-72 overflow-hidden">
+        {/* Gold corner decoration */}
+        <div className="absolute top-0 right-0 w-16 h-16 z-10 overflow-hidden opacity-60">
+          <div className="absolute top-0 right-0 w-px h-12 bg-[#D4AF37]"></div>
+          <div className="absolute top-0 right-0 h-px w-12 bg-[#D4AF37]"></div>
+        </div>
+        
         <motion.img
-          animate={{ scale: isHovered ? 1.05 : 1 }}
-          transition={{ duration: 0.4 }}
+          animate={{ 
+            scale: isHovered ? 1.1 : 1,
+            y: isHovered ? -5 : 0 
+          }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
           src={service.imageUrl}
           alt={service.name}
           className="object-cover h-full w-full"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D] to-transparent"></div>
-        <div className="absolute bottom-4 left-4">
-          <h3 className="text-[#F4F4F4] text-2xl font-playfair font-bold">{service.name}</h3>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D] via-[#0D0D0D]/40 to-transparent opacity-80"></div>
+        
+        {/* Gold decorative line */}
+        <motion.div 
+          className="absolute bottom-0 left-0 h-px w-0 bg-[#D4AF37]"
+          animate={{ width: isHovered ? '100%' : '30%' }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+        />
+        
+        <div className="absolute bottom-4 left-6">
+          <h3 className="text-[#F4F4F4] text-2xl font-playfair font-medium mb-1">
+            {service.name}
+          </h3>
         </div>
       </div>
-      <div className="p-6">
-        <p className="text-[#F4F4F4] mb-6">{service.description}</p>
-        <div className="mb-6">
-          <div className="flex justify-between mb-2">
-            <span className="text-[#F4F4F4] text-sm">Starting from</span>
-            <span className="text-[#D4AF37] font-medium">{priceLabel}</span>
+      
+      {/* Content Section */}
+      <div className="flex-grow p-6 sm:p-8 flex flex-col justify-between">
+        {/* Description */}
+        <p className="text-[#F4F4F4]/80 mb-6 font-montserrat text-sm leading-relaxed">
+          {service.description}
+        </p>
+        
+        {/* Divider */}
+        <div className="divider-gold my-6 w-20 ml-0 transition-all duration-500 group-hover:w-32"></div>
+        
+        {/* Details */}
+        <div className="mb-8">
+          <div className="flex justify-between items-end mb-4">
+            <span className="text-[#F4F4F4]/60 text-xs uppercase tracking-widest font-montserrat">Starting from</span>
+            <span className="text-gold-gradient text-xl font-medium font-cormorant">{priceLabel}</span>
           </div>
-          <div className="flex justify-between text-xs text-[#F4F4F4]">
-            <span>{capacityLabel}</span>
-            <span>{featureLabel}</span>
+          <div className="grid grid-cols-2 gap-4 text-xs text-[#F4F4F4]/70 font-montserrat">
+            <div className="flex items-center">
+              <div className="w-1 h-1 rounded-full bg-[#D4AF37] mr-2"></div>
+              <span>{capacityLabel}</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-1 h-1 rounded-full bg-[#D4AF37] mr-2"></div>
+              <span>{featureLabel}</span>
+            </div>
           </div>
         </div>
-        <Link href={`/service/${service.id}`}>
-          <a className="block text-center bg-[#D4AF37] hover:bg-opacity-80 text-[#0D0D0D] px-6 py-2 rounded text-sm font-medium transition-all duration-300 uppercase tracking-wider">
-            {bookingText}
-          </a>
+        
+        {/* CTA Button */}
+        <Link 
+          href={`/service/${service.id}`}
+          className="group inline-flex items-center justify-between bg-transparent border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/10 px-6 py-3 text-sm uppercase tracking-wider font-medium transition-all duration-500 overflow-hidden relative"
+        >
+          <span className="z-10">{bookingText}</span>
+          <ArrowUpRight className="ml-2 h-4 w-4 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
+          
+          {/* Animated shine effect */}
+          <div className="absolute top-0 -inset-full h-full w-1/2 z-5 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-10 group-hover:animate-shine" />
         </Link>
       </div>
-    </Card>
+    </div>
   );
 }
