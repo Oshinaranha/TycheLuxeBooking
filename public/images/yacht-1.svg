@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#051a33"/>
+  
+  <!-- Ocean gradient -->
+  <defs>
+    <linearGradient id="oceanGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a4c78" />
+      <stop offset="100%" stop-color="#072f4c" />
+    </linearGradient>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a90e2" />
+      <stop offset="100%" stop-color="#6aa9e9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky -->
+  <rect x="0" y="0" width="800" height="300" fill="url(#skyGradient)"/>
+  
+  <!-- Ocean -->
+  <rect x="0" y="300" width="800" height="300" fill="url(#oceanGradient)"/>
+  
+  <!-- Sun reflection -->
+  <ellipse cx="650" cy="300" rx="100" ry="25" fill="#fff" opacity="0.2"/>
+  
+  <!-- Ocean waves -->
+  <g opacity="0.4">
+    <path d="M0,310 C50,305 100,315 150,310 C200,305 250,315 300,310 C350,305 400,315 450,310 C500,305 550,315 600,310 C650,305 700,315 750,310 C800,305 850,315 900,310" 
+          stroke="#fff" stroke-width="2" fill="none" opacity="0.3"/>
+    <path d="M0,330 C50,325 100,335 150,330 C200,325 250,335 300,330 C350,325 400,335 450,330 C500,325 550,335 600,330 C650,325 700,335 750,330 C800,325 850,335 900,330" 
+          stroke="#fff" stroke-width="1.5" fill="none" opacity="0.2"/>
+    <path d="M0,350 C50,345 100,355 150,350 C200,345 250,355 300,350 C350,345 400,355 450,350 C500,345 550,355 600,350 C650,345 700,355 750,350 C800,345 850,355 900,350" 
+          stroke="#fff" stroke-width="1" fill="none" opacity="0.1"/>
+  </g>
+  
+  <!-- Yacht hull -->
+  <g transform="translate(400, 350)">
+    <!-- Main hull -->
+    <path d="M-150,10 C-100,-10 -50,-25 0,-25 C50,-25 100,-10 150,10 C120,20 50,30 0,30 C-50,30 -120,20 -150,10 Z" fill="#f8f8f8"/>
+    
+    <!-- Deck structure -->
+    <rect x="-120" y="-25" width="240" height="8" rx="2" fill="#e8e8e8"/>
+    
+    <!-- Cabins -->
+    <rect x="-100" y="-40" width="200" height="15" rx="3" fill="#fff"/>
+    <rect x="-80" y="-55" width="160" height="15" rx="3" fill="#fff"/>
+    <rect x="-60" y="-70" width="120" height="15" rx="3" fill="#fff"/>
+    
+    <!-- Windows -->
+    <g fill="#87CEEB" opacity="0.7">
+      <rect x="-90" y="-38" width="10" height="5" rx="1"/>
+      <rect x="-70" y="-38" width="10" height="5" rx="1"/>
+      <rect x="-50" y="-38" width="10" height="5" rx="1"/>
+      <rect x="-30" y="-38" width="10" height="5" rx="1"/>
+      <rect x="-10" y="-38" width="10" height="5" rx="1"/>
+      <rect x="10" y="-38" width="10" height="5" rx="1"/>
+      <rect x="30" y="-38" width="10" height="5" rx="1"/>
+      <rect x="50" y="-38" width="10" height="5" rx="1"/>
+      <rect x="70" y="-38" width="10" height="5" rx="1"/>
+      
+      <rect x="-70" y="-53" width="10" height="5" rx="1"/>
+      <rect x="-50" y="-53" width="10" height="5" rx="1"/>
+      <rect x="-30" y="-53" width="10" height="5" rx="1"/>
+      <rect x="-10" y="-53" width="10" height="5" rx="1"/>
+      <rect x="10" y="-53" width="10" height="5" rx="1"/>
+      <rect x="30" y="-53" width="10" height="5" rx="1"/>
+      <rect x="50" y="-53" width="10" height="5" rx="1"/>
+      
+      <rect x="-50" y="-68" width="10" height="5" rx="1"/>
+      <rect x="-30" y="-68" width="10" height="5" rx="1"/>
+      <rect x="-10" y="-68" width="10" height="5" rx="1"/>
+      <rect x="10" y="-68" width="10" height="5" rx="1"/>
+      <rect x="30" y="-68" width="10" height="5" rx="1"/>
+    </g>
+    
+    <!-- Rear deck -->
+    <rect x="-140" y="-10" width="50" height="10" rx="5" fill="#e0e0e0"/>
+    
+    <!-- Front deck -->
+    <rect x="90" y="-10" width="50" height="10" rx="5" fill="#e0e0e0"/>
+    
+    <!-- Mast -->
+    <line x1="0" y1="-70" x2="0" y2="-120" stroke="#d0d0d0" stroke-width="3"/>
+    
+    <!-- Luxury Gold Accents -->
+    <path d="M-130,8 L130,8 L130,10 L-130,10 Z" fill="#d4af37" opacity="0.8"/>
+    <path d="M-100,-40 L100,-40 L100,-38 L-100,-38 Z" fill="#d4af37" opacity="0.6"/>
+    <path d="M-80,-55 L80,-55 L80,-53 L-80,-53 Z" fill="#d4af37" opacity="0.6"/>
+    <path d="M-60,-70 L60,-70 L60,-68 L-60,-68 Z" fill="#d4af37" opacity="0.6"/>
+  </g>
+  
+  <!-- Water ripples around yacht -->
+  <path d="M200,350 C250,355 300,345 350,350 C400,355 450,345 500,350 C550,355 600,345 650,350" 
+        stroke="#fff" stroke-width="1.5" fill="none" opacity="0.2"/>
+  <path d="M200,360 C250,365 300,355 350,360 C400,365 450,355 500,360 C550,365 600,355 650,360" 
+        stroke="#fff" stroke-width="1" fill="none" opacity="0.1"/>
+  
+  <!-- Sun -->
+  <circle cx="650" cy="100" r="40" fill="#ffdd57" opacity="0.8"/>
+  <circle cx="650" cy="100" r="60" fill="#ffdd57" opacity="0.3"/>
+  
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial" font-size="24" fill="#fff" text-anchor="middle">Azimut Grande 35</text>
+  <text x="400" y="80" font-family="Arial" font-size="18" fill="#fff" text-anchor="middle" opacity="0.7">Luxury Megayacht</text>
+</svg>

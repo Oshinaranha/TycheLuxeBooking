@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#0a0f1a"/>
+  
+  <!-- Sky gradient -->
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a1a33" />
+      <stop offset="100%" stop-color="#0a0f1a" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#skyGradient)"/>
+  
+  <!-- Clouds -->
+  <g opacity="0.4">
+    <ellipse cx="120" cy="100" rx="80" ry="30" fill="white" opacity="0.3"/>
+    <ellipse cx="500" cy="150" rx="100" ry="40" fill="white" opacity="0.2"/>
+    <ellipse cx="700" cy="80" rx="90" ry="30" fill="white" opacity="0.1"/>
+  </g>
+  
+  <!-- Jet body -->
+  <g transform="translate(400, 300) scale(1.5) rotate(-10)">
+    <!-- Fuselage -->
+    <path d="M-120,0 C-100,-8 -40,-15 0,-15 C40,-15 100,-5 130,0 C100,5 40,15 0,15 C-40,15 -100,8 -120,0 Z" fill="#f0f0f0"/>
+    
+    <!-- Nose Cone -->
+    <path d="M130,0 C140,-5 150,-5 160,0 C150,5 140,5 130,0 Z" fill="#e0e0e0"/>
+    
+    <!-- Tail -->
+    <path d="M-120,0 C-130,-4 -140,-5 -150,0 C-140,5 -130,4 -120,0 Z" fill="#e0e0e0"/>
+    
+    <!-- Vertical Stabilizer -->
+    <path d="M-130,0 L-140,-30 L-110,-5 Z" fill="#e0e0e0"/>
+    
+    <!-- Wings -->
+    <path d="M0,0 L-40,-45 L20,-40 L40,-10 Z" fill="#d8d8d8"/>
+    <path d="M0,0 L-40,45 L20,40 L40,10 Z" fill="#d8d8d8"/>
+    
+    <!-- Windows -->
+    <g fill="#87CEEB" opacity="0.7">
+      <circle cx="90" cy="-5" r="2"/>
+      <circle cx="75" cy="-7" r="2"/>
+      <circle cx="60" cy="-8" r="2"/>
+      <circle cx="45" cy="-9" r="2"/>
+      <circle cx="30" cy="-10" r="2"/>
+      <circle cx="15" cy="-10" r="2"/>
+      <circle cx="0" cy="-10" r="2"/>
+      <circle cx="-15" cy="-10" r="2"/>
+      <circle cx="-30" cy="-10" r="2"/>
+      <circle cx="-45" cy="-9" r="2"/>
+      <circle cx="-60" cy="-8" r="2"/>
+    </g>
+    
+    <!-- Engines -->
+    <rect x="20" y="-25" width="30" height="10" rx="5" fill="#a0a0a0"/>
+    <rect x="20" y="15" width="30" height="10" rx="5" fill="#a0a0a0"/>
+    
+    <!-- Luxury Gold Stripe -->
+    <path d="M-110,-3 L130,-3 L130,3 L-110,3 Z" fill="#d4af37" opacity="0.8"/>
+  </g>
+  
+  <!-- Contrails -->
+  <path d="M800,270 C700,275 650,280 600,290 C550,300 500,310 450,320" stroke="white" fill="none" stroke-width="5" opacity="0.1"/>
+  <path d="M800,290 C700,295 650,300 600,310 C550,320 500,330 450,340" stroke="white" fill="none" stroke-width="3" opacity="0.1"/>
+  
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial" font-size="24" fill="#d4af37" text-anchor="middle">Gulfstream G650</text>
+  <text x="400" y="80" font-family="Arial" font-size="18" fill="#f0f0f0" text-anchor="middle" opacity="0.7">Ultimate Luxury Private Jet</text>
+</svg>

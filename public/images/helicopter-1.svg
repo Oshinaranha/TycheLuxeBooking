@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#0f1923"/>
+  
+  <!-- Sky gradient -->
+  <defs>
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a2c3f" />
+      <stop offset="100%" stop-color="#0f1923" />
+    </linearGradient>
+    <radialGradient id="spotlightGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#skyGradient)"/>
+  
+  <!-- Spotlight effect -->
+  <ellipse cx="400" cy="300" rx="300" ry="200" fill="url(#spotlightGradient)"/>
+  
+  <!-- Helicopter -->
+  <g transform="translate(400, 300) scale(1.2)">
+    <!-- Main Body -->
+    <ellipse cx="0" cy="0" rx="100" ry="30" fill="#202020"/>
+    <path d="M-100,0 C-80,-30 80,-30 100,0 C80,30 -80,30 -100,0 Z" fill="#303030"/>
+    
+    <!-- Cockpit Glass -->
+    <path d="M50,-5 C70,-20 90,-15 100,0 C90,15 70,20 50,5 Z" fill="#87CEEB" opacity="0.7"/>
+    
+    <!-- Tail Boom -->
+    <path d="M-100,0 L-180,20 L-190,15 L-100,-10 Z" fill="#252525"/>
+    
+    <!-- Tail Rotor -->
+    <line x1="-190" y1="15" x2="-190" y2="-15" stroke="#404040" stroke-width="2"/>
+    <ellipse cx="-190" cy="0" rx="10" ry="2" fill="#404040" transform="rotate(45, -190, 0)"/>
+    <ellipse cx="-190" cy="0" rx="10" ry="2" fill="#404040" transform="rotate(135, -190, 0)"/>
+    
+    <!-- Landing Gear -->
+    <rect x="-60" y="30" width="120" height="5" rx="2" fill="#404040"/>
+    <rect x="-60" y="35" width="5" height="15" rx="1" fill="#404040"/>
+    <rect x="55" y="35" width="5" height="15" rx="1" fill="#404040"/>
+    
+    <!-- Main Rotor -->
+    <circle cx="0" cy="-5" r="8" fill="#505050"/>
+    <rect x="-150" y="-7" width="300" height="4" rx="2" fill="#505050" opacity="0.3"/>
+    <rect x="-7" y="-150" width="14" height="300" rx="2" fill="#505050" opacity="0.2"/>
+    
+    <!-- Doors -->
+    <path d="M-20,-28 L40,-28 L40,28 L-20,28 Z" stroke="#606060" stroke-width="1" fill="none"/>
+    
+    <!-- Windows -->
+    <rect x="-80" y="-15" width="20" height="10" rx="2" fill="#87CEEB" opacity="0.5"/>
+    <rect x="-50" y="-20" width="20" height="15" rx="2" fill="#87CEEB" opacity="0.5"/>
+    <rect x="-20" y="-20" width="20" height="15" rx="2" fill="#87CEEB" opacity="0.5"/>
+    <rect x="10" y="-20" width="20" height="15" rx="2" fill="#87CEEB" opacity="0.5"/>
+    
+    <!-- Luxury Gold Accents -->
+    <path d="M-100,0 C-80,-28 80,-28 100,0" stroke="#d4af37" stroke-width="2" fill="none"/>
+    <path d="M-100,0 C-80,28 80,28 100,0" stroke="#d4af37" stroke-width="2" fill="none"/>
+    <circle cx="0" cy="-5" r="10" stroke="#d4af37" stroke-width="1" fill="none"/>
+  </g>
+  
+  <!-- City Skyline Silhouette -->
+  <path d="M0,400 L50,400 L50,380 L70,380 L70,390 L100,390 L100,370 L120,370 L120,400 
+           L150,400 L150,360 L170,360 L170,350 L200,350 L200,370 L230,370 L230,340 
+           L250,340 L250,380 L280,380 L280,330 L310,330 L310,360 L330,360 L330,380 
+           L360,380 L360,340 L390,340 L390,370 L410,370 L410,350 L440,350 L440,380 
+           L470,380 L470,350 L490,350 L490,330 L520,330 L520,360 L550,360 L550,340 
+           L580,340 L580,370 L600,370 L600,350 L630,350 L630,390 L650,390 L650,370 
+           L680,370 L680,400 L710,400 L710,380 L740,380 L740,350 L770,350 L770,400 L800,400" 
+        fill="#0a0a0a"/>
+  
+  <!-- Lights -->
+  <g>
+    <circle cx="100" cy="380" r="2" fill="#ffff00" opacity="0.7"/>
+    <circle cx="200" cy="360" r="2" fill="#ffff00" opacity="0.7"/>
+    <circle cx="300" cy="350" r="2" fill="#ffff00" opacity="0.7"/>
+    <circle cx="400" cy="360" r="2" fill="#ffff00" opacity="0.7"/>
+    <circle cx="500" cy="340" r="2" fill="#ffff00" opacity="0.7"/>
+    <circle cx="600" cy="380" r="2" fill="#ffff00" opacity="0.7"/>
+    <circle cx="700" cy="370" r="2" fill="#ffff00" opacity="0.7"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial" font-size="24" fill="#fff" text-anchor="middle">Bell 429 WLG</text>
+  <text x="400" y="80" font-family="Arial" font-size="18" fill="#fff" text-anchor="middle" opacity="0.7">Executive Helicopter</text>
+</svg>
