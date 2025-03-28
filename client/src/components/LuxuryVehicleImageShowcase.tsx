@@ -139,10 +139,24 @@ export default function LuxuryVehicleImageShowcase() {
                   >
                     <AnimatedPrivateJet className="w-full h-full" />
                     
-                    {/* Jet info overlay */}
-                    <div className="absolute bottom-16 left-8 right-8 p-4 bg-black bg-opacity-60 backdrop-blur-sm rounded-xl text-white">
-                      <h3 className="text-[#D4AF37] font-semibold mb-1">Gulfstream G650</h3>
+                    {/* Jet info overlay - positioned to not obscure the jet image */}
+                    <div className="absolute bottom-12 left-8 right-8 p-5 bg-black bg-opacity-50 backdrop-blur-sm rounded-xl text-white">
+                      <h3 className="text-[#D4AF37] font-semibold mb-2 text-lg">Gulfstream G650</h3>
                       <p className="text-xs md:text-sm opacity-90">Experience unmatched comfort and speed with our flagship private jet. Travel up to 8,000 miles non-stop at Mach 0.9 with 14 passengers in ultimate luxury.</p>
+                      <div className="flex justify-between mt-3 items-center">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[#D4AF37] text-xs">Range:</span>
+                          <span className="text-white text-xs">8,000 miles</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[#D4AF37] text-xs">Speed:</span>
+                          <span className="text-white text-xs">Mach 0.9</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[#D4AF37] text-xs">Capacity:</span>
+                          <span className="text-white text-xs">14 passengers</span>
+                        </div>
+                      </div>
                     </div>
                   </motion.div>
                 ) : (

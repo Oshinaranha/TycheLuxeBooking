@@ -16,19 +16,22 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
     const animateJet = async () => {
       // Initial state - jet slightly tilted
       await controls.start({
-        rotate: -2,
-        y: 10,
+        rotate: -1,
+        y: 5,
         transition: { duration: 2 }
       });
       
-      // Smooth flight motion - slight banking and elevation changes
+      // Smooth flight motion - very subtle banking and elevation changes
+      // to match the sleek, stable flight of a luxury jet
       controls.start({
-        rotate: [-2, 0, 2, 0, -2] as any,
-        y: [10, 0, -10, 0, 10] as any,
+        rotate: [-1, 0, 1, 0, -1] as any,
+        y: [5, 0, -5, 0, 5] as any,
+        x: [2, 0, -2, 0, 2] as any, // Add subtle horizontal movement
         transition: { 
-          duration: 15, 
+          duration: 20, 
           repeat: Infinity, 
-          ease: "easeInOut" 
+          ease: "easeInOut",
+          times: [0, 0.25, 0.5, 0.75, 1]
         }
       });
     };
@@ -71,16 +74,16 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
   
   return (
     <div className={`relative w-full h-full overflow-hidden ${className}`}>
-      {/* Sky background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#a1c4fd] to-[#c2e9fb]" />
+      {/* Sky background that matches the image */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#bacce9] to-[#d4e5f7]" />
       
-      {/* Cloud layers */}
+      {/* Cloud layers - more fluffy and realistic */}
       <div ref={cloudsRef} className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-[60%] h-[15%] bg-white opacity-80 rounded-full blur-md" />
-        <div className="absolute w-[40%] h-[10%] bg-white opacity-70 rounded-full blur-md" />
-        <div className="absolute w-[70%] h-[20%] bg-white opacity-90 rounded-full blur-md" />
-        <div className="absolute w-[50%] h-[15%] bg-white opacity-60 rounded-full blur-md" />
-        <div className="absolute w-[45%] h-[12%] bg-white opacity-75 rounded-full blur-md" />
+        <div className="absolute w-[55%] h-[18%] bg-white opacity-90 rounded-full blur-[10px]" />
+        <div className="absolute w-[65%] h-[15%] bg-white opacity-85 rounded-full blur-[12px]" />
+        <div className="absolute w-[75%] h-[22%] bg-white opacity-95 rounded-full blur-[8px]" />
+        <div className="absolute w-[60%] h-[20%] bg-white opacity-80 rounded-full blur-[15px]" />
+        <div className="absolute w-[50%] h-[16%] bg-white opacity-90 rounded-full blur-[10px]" />
       </div>
       
       {/* Jet */}
@@ -90,11 +93,13 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
         animate={controls}
         initial={{ rotate: 0, y: 0 }}
       >
-        {/* Jet image - use an actual private jet image */}
-        <img 
-          src="/images/jet-1.svg" 
-          alt="Luxury Private Jet" 
-          className="w-full h-full object-contain"
+        {/* Luxury Jet Image */}
+        <div
+          className="w-full h-full bg-center bg-no-repeat bg-contain"
+          style={{
+            backgroundImage: "url('https://i.imgur.com/WDG2mXu.png')",
+            backgroundSize: "contain"
+          }}
         />
         
         {/* Engine effects - subtle light glow */}
