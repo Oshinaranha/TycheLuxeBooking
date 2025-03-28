@@ -16,12 +16,10 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <Link href="/">
-              <a className="flex items-center mb-6">
-                <span className="text-[#D4AF37] font-playfair text-2xl font-bold tracking-wider">
-                  TYCHE LUXE
-                </span>
-              </a>
+            <Link href="/" className="flex items-center mb-6">
+              <span className="text-[#D4AF37] font-playfair text-2xl font-bold tracking-wider">
+                TYCHE LUXE
+              </span>
             </Link>
             <p className="text-[#F4F4F4] opacity-70 mb-6">
               Redefining luxury travel with exclusive access to the world's finest private jets, yachts, and exotic cars.
@@ -75,8 +73,8 @@ export default function Footer() {
             </div>
             <p className="text-[#F4F4F4] opacity-70 text-sm">
               By subscribing, you agree to our{" "}
-              <Link href="#">
-                <a className="text-[#D4AF37] hover:underline">Privacy Policy</a>
+              <Link href="#" className="text-[#D4AF37] hover:underline">
+                Privacy Policy
               </Link>{" "}
               and consent to receive updates from Tyche Luxe.
             </p>
@@ -88,20 +86,23 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} Tyche Luxe. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <Link href="#">
-              <a className="text-[#F4F4F4] opacity-70 hover:text-[#D4AF37] text-sm transition-colors duration-300">
-                Privacy Policy
-              </a>
+            <Link 
+              href="#" 
+              className="text-[#F4F4F4] opacity-70 hover:text-[#D4AF37] text-sm transition-colors duration-300"
+            >
+              Privacy Policy
             </Link>
-            <Link href="#">
-              <a className="text-[#F4F4F4] opacity-70 hover:text-[#D4AF37] text-sm transition-colors duration-300">
-                Terms of Service
-              </a>
+            <Link 
+              href="#" 
+              className="text-[#F4F4F4] opacity-70 hover:text-[#D4AF37] text-sm transition-colors duration-300"
+            >
+              Terms of Service
             </Link>
-            <Link href="#">
-              <a className="text-[#F4F4F4] opacity-70 hover:text-[#D4AF37] text-sm transition-colors duration-300">
-                Cookie Policy
-              </a>
+            <Link 
+              href="#" 
+              className="text-[#F4F4F4] opacity-70 hover:text-[#D4AF37] text-sm transition-colors duration-300"
+            >
+              Cookie Policy
             </Link>
           </div>
         </div>
@@ -134,10 +135,11 @@ interface FooterLinkProps {
 function FooterLink({ href, label }: FooterLinkProps) {
   return (
     <li>
-      <Link href={href}>
-        <a className="text-[#F4F4F4] opacity-70 hover:text-[#D4AF37] transition-colors duration-300">
-          {label}
-        </a>
+      <Link 
+        href={href}
+        className="text-[#F4F4F4] opacity-70 hover:text-[#D4AF37] transition-colors duration-300"
+      >
+        {label}
       </Link>
     </li>
   );
