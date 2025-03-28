@@ -1,29 +1,23 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { MagicButton } from '@/components/ui/magic-button';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { AnimatedPrivateJet } from '@/components/AnimatedPrivateJet';
 
 // Real luxury vehicle images
 const vehicleImages = {
   jet: [
-    '/images/jet-1.jpg',
-    '/images/jet-2.jpg',
-    '/images/jet-3.jpg',
+    '/images/jet-1.svg',
+    '/images/jet-2.svg',
   ],
   yacht: [
-    '/images/yacht-1.jpg',
-    '/images/yacht-2.jpg',
-    '/images/yacht-3.jpg',
+    '/images/yacht-1.svg',
   ],
   helicopter: [
-    '/images/helicopter-1.jpg',
-    '/images/helicopter-2.jpg',
-    '/images/helicopter-3.jpg',
+    '/images/helicopter-1.svg',
   ],
   car: [
-    '/images/car-1.jpg',
-    '/images/car-2.jpg',
-    '/images/car-3.jpg',
+    '/images/car-1.svg',
   ],
 };
 
@@ -134,35 +128,54 @@ export default function LuxuryVehicleImageShowcase() {
                   <div className="absolute top-0 left-0 w-full h-full bg-grid-white-pattern rotate-12"></div>
                 </div>
                 
-                {vehicleImages[activeVehicle].map((src, index) => (
+                {/* Show the animated jet when in jet mode */}
+                {activeVehicle === 'jet' ? (
                   <motion.div 
-                    key={src}
                     className="absolute inset-0 w-full h-full"
                     initial={{ opacity: 0 }}
-                    animate={{ 
-                      opacity: index === currentImageIndex ? 1 : 0,
-                      scale: index === currentImageIndex ? 1 : 1.05
-                    }}
-                    transition={{ duration: 1.2, ease: "easeInOut" }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
                   >
-                    {/* Placeholder for real images */}
-                    <div 
-                      className="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg"
-                      style={{ 
-                        backgroundImage: `url(${src})`,
-                        filter: 'saturate(1.1) contrast(1.1)'
-                      }}
-                    />
+                    <AnimatedPrivateJet className="w-full h-full" />
                     
-                    {/* Image loading fallback */}
-                    <div className="absolute inset-0 flex items-center justify-center text-[#D4AF37] text-opacity-50">
-                      {activeVehicle === 'jet' && 'High-end Private Jet Image'}
-                      {activeVehicle === 'yacht' && 'Luxury Yacht Image'}
-                      {activeVehicle === 'helicopter' && 'Executive Helicopter Image'}
-                      {activeVehicle === 'car' && 'Premium Supercar Image'}
+                    {/* Jet info overlay */}
+                    <div className="absolute bottom-16 left-8 right-8 p-4 bg-black bg-opacity-60 backdrop-blur-sm rounded-xl text-white">
+                      <h3 className="text-[#D4AF37] font-semibold mb-1">Gulfstream G650</h3>
+                      <p className="text-xs md:text-sm opacity-90">Experience unmatched comfort and speed with our flagship private jet. Travel up to 8,000 miles non-stop at Mach 0.9 with 14 passengers in ultimate luxury.</p>
                     </div>
                   </motion.div>
-                ))}
+                ) : (
+                  // Show regular vehicle images for other types
+                  vehicleImages[activeVehicle].map((src, index) => (
+                    <motion.div 
+                      key={src}
+                      className="absolute inset-0 w-full h-full"
+                      initial={{ opacity: 0 }}
+                      animate={{ 
+                        opacity: index === currentImageIndex ? 1 : 0,
+                        scale: index === currentImageIndex ? 1 : 1.05
+                      }}
+                      transition={{ duration: 1.2, ease: "easeInOut" }}
+                    >
+                      {/* Vehicle image */}
+                      <div 
+                        className="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg"
+                        style={{ 
+                          backgroundImage: `url(${src})`,
+                          filter: 'saturate(1.1) contrast(1.1)'
+                        }}
+                      />
+                      
+                      {/* Image loading fallback */}
+                      <div className="absolute inset-0 flex items-center justify-center text-[#D4AF37] text-opacity-50">
+                        {activeVehicle === 'yacht' && 'Luxury Yacht Image'}
+                        {activeVehicle === 'helicopter' && 'Executive Helicopter Image'}
+                        {activeVehicle === 'car' && 'Premium Supercar Image'}
+                      </div>
+                    </motion.div>
+                  ))
+                )}
                 
                 {/* Image navigation dots */}
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
