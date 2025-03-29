@@ -1,0 +1,132 @@
+{
+  "asset": {
+    "generator": "Khronos glTF Blender I/O v1.6.16",
+    "version": "2.0"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Scene",
+      "nodes": [0]
+    }
+  ],
+  "nodes": [
+    {
+      "mesh": 0,
+      "name": "PilatusPC24",
+      "rotation": [0, 0, 0, 1],
+      "scale": [1, 1, 1],
+      "translation": [0, 0, 0]
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "JetBody",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.8, 0.8, 0.9, 1.0],
+        "metallicFactor": 0.8,
+        "roughnessFactor": 0.2
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "JetWindows",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.1, 0.2, 0.9, 0.7],
+        "metallicFactor": 1.0,
+        "roughnessFactor": 0.1
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "JetEngine",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.2, 0.2, 0.2, 1.0],
+        "metallicFactor": 0.9,
+        "roughnessFactor": 0.1
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "JetWings",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.8, 0.8, 0.9, 1.0],
+        "metallicFactor": 0.8,
+        "roughnessFactor": 0.2
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "PilatusPC24Mesh",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 0,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "componentType": 5123,
+      "count": 36,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 36,
+      "max": [1, 0.5, 3],
+      "min": [-1, -0.5, -3],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 36,
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 36,
+      "type": "VEC2"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 72,
+      "byteOffset": 0
+    },
+    {
+      "buffer": 0,
+      "byteLength": 432,
+      "byteOffset": 72
+    },
+    {
+      "buffer": 0,
+      "byteLength": 432,
+      "byteOffset": 504
+    },
+    {
+      "buffer": 0,
+      "byteLength": 288,
+      "byteOffset": 936
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1224,
+      "uri": "data:application/octet-stream;base64,AAABAAIAAAACAAMABAAFAAYABAAGAAcACAAJAAoACAAKAAsADAANAA4ADAAOAA8AEAARABIAEAASABMAFAAVABYAFAAWABcAGAAZABoAGAAaABsAHAAdAB4AHAAeAB8AAAAAvwAAAD8AAAAAAAAAAAAAAAAAAAAvAAAAP8AAAAAAAAAAAAAAAAAAvwAAAL8AAAAAAAAAAAAAAAAAAAAvAAAAvwAAAAAAAAAAAAAAAAAAAL8AAAA/AAAAAAAAAM/MzD0AAAAvAAAAPwAAAAAAAADPzMw9AAAAvwAAAL8AAAAAAAAA0czMPQAAAC8AAAC/AAAAAAAAAM/MzD0AAAAvAAAAPwAAAEAAAAAAAAAAAAAALwAAAD8AAABAAAAAAAAAAAAAAAvAAAAvwAAAQAAAAAAAAAAAAAALwAAAL8AAAEAAAAAAAAAAAAAAvwAAAD8AAABAAAAAPwAAAAAAAAAvAAAAPwAAAEAAAAA/AAAAAAAAAAvAAAAvwAAAQAAAAD8AAAAAAAAAvwAAAL8AAABAAAAAPwAAAAAAAAC/AAAAPwAAAEAAAABAAAAAAAAAAC8AAAA/AAAAQAAAAEAAAAAAAAAALwAAAL8AAABAAAAAQAAAAAAAAAAvAAAAvwAAAEAAAABAAAAAAAAAAL8AAAC/AAAAQAAAAAByy0yyAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAACAvwAAAAAAAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAAAAgL8AAAAAAAAAAP//fz8AAAAAAAAAAP//fz8AAAAAAAAAAP//fz8AAAAAAAAAAP//fz8AAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAAAAAAgD8AAAAAAAAgPwAAQD8AACA/AABgPwAAAD8AAGA/AAAAPwAAQD8AACA/AAAgPwAAID8AAAA/AAAAPwAAAD8AAAA/AAAgPwAAYD8AAEA/AABgPwAAYD8AAGA/AABgPwAAYD8AAEA/AAAgPwAAID8AACA/AAAAPwAAAD8AAAA/AAAAPwAAID8AACA/AABAPwAAID8AAGA/AAAAPwAAYD8AAAA/AABAPwAAYD8AAEA/AABgPwAAYD8AAGA/AABgPwAAYD8AAEA/"
+    }
+  ]
+}

@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { MagicButton } from '@/components/ui/magic-button';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { AnimatedPrivateJet } from '@/components/AnimatedPrivateJet';
-import { AnimatedYacht } from '@/components/AnimatedYacht';
+import { LuxuryVehicleModel } from '@/components/3d/LuxuryVehicleModel';
 
 // Real luxury vehicle images
 const vehicleImages = {
@@ -129,69 +128,66 @@ export default function LuxuryVehicleImageShowcase() {
                   <div className="absolute top-0 left-0 w-full h-full bg-grid-white-pattern rotate-12"></div>
                 </div>
                 
-                {/* Show different animated vehicles based on selection */}
-                {activeVehicle === 'jet' ? (
-                  <motion.div 
-                    className="absolute inset-0 w-full h-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8 }}
-                  >
-                    <AnimatedPrivateJet className="w-full h-full" />
+                {/* Show vehicle models based on selection using our consolidated component */}
+                <motion.div 
+                  className="absolute inset-0 w-full h-full"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <LuxuryVehicleModel vehicleType={activeVehicle} className="w-full h-full" />
+                  
+                  {/* Vehicle info overlay */}
+                  <div className={`absolute bottom-12 left-8 right-8 p-5 bg-black bg-opacity-50 backdrop-blur-sm rounded-xl text-white z-20 ${
+                    activeVehicle === 'jet' || activeVehicle === 'yacht' ? '' : 'hidden'
+                  }`}>
+                    {activeVehicle === 'jet' && (
+                      <>
+                        <h3 className="text-[#D4AF37] font-semibold mb-2 text-lg">Pilatus PC-24</h3>
+                        <p className="text-xs md:text-sm opacity-90">Experience unmatched versatility with our Pilatus PC-24 Super Versatile Jet. Travel up to 2,000 miles non-stop at 440 knots with 8 passengers in ultimate comfort on almost any runway.</p>
+                        <div className="flex justify-between mt-3 items-center">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#D4AF37] text-xs">Range:</span>
+                            <span className="text-white text-xs">2,000 miles</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#D4AF37] text-xs">Speed:</span>
+                            <span className="text-white text-xs">440 knots</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#D4AF37] text-xs">Capacity:</span>
+                            <span className="text-white text-xs">8 passengers</span>
+                          </div>
+                        </div>
+                      </>
+                    )}
                     
-                    {/* Jet info overlay - positioned to not obscure the jet image */}
-                    <div className="absolute bottom-12 left-8 right-8 p-5 bg-black bg-opacity-50 backdrop-blur-sm rounded-xl text-white">
-                      <h3 className="text-[#D4AF37] font-semibold mb-2 text-lg">Gulfstream G650</h3>
-                      <p className="text-xs md:text-sm opacity-90">Experience unmatched comfort and speed with our flagship private jet. Travel up to 8,000 miles non-stop at Mach 0.9 with 14 passengers in ultimate luxury.</p>
-                      <div className="flex justify-between mt-3 items-center">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[#D4AF37] text-xs">Range:</span>
-                          <span className="text-white text-xs">8,000 miles</span>
+                    {activeVehicle === 'yacht' && (
+                      <>
+                        <h3 className="text-[#70AFE8] font-semibold mb-2 text-lg">Azimut Grande 35M</h3>
+                        <p className="text-xs md:text-sm opacity-90">Indulge in maritime luxury with our flagship yacht. Featuring 5 luxurious cabins, expansive entertainment areas, and a crew of 6 dedicated to your comfort.</p>
+                        <div className="flex justify-between mt-3 items-center">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#70AFE8] text-xs">Length:</span>
+                            <span className="text-white text-xs">35 meters</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#70AFE8] text-xs">Cabins:</span>
+                            <span className="text-white text-xs">5 luxury suites</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#70AFE8] text-xs">Max Speed:</span>
+                            <span className="text-white text-xs">26 knots</span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[#D4AF37] text-xs">Speed:</span>
-                          <span className="text-white text-xs">Mach 0.9</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[#D4AF37] text-xs">Capacity:</span>
-                          <span className="text-white text-xs">14 passengers</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ) : activeVehicle === 'yacht' ? (
-                  <motion.div 
-                    className="absolute inset-0 w-full h-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8 }}
-                  >
-                    <AnimatedYacht className="w-full h-full" />
-                    
-                    {/* Yacht info overlay */}
-                    <div className="absolute bottom-12 left-8 right-8 p-5 bg-black bg-opacity-50 backdrop-blur-sm rounded-xl text-white">
-                      <h3 className="text-[#70AFE8] font-semibold mb-2 text-lg">Azimut Grande 35M</h3>
-                      <p className="text-xs md:text-sm opacity-90">Indulge in maritime luxury with our flagship yacht. Featuring 5 luxurious cabins, expansive entertainment areas, and a crew of 6 dedicated to your comfort.</p>
-                      <div className="flex justify-between mt-3 items-center">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[#70AFE8] text-xs">Length:</span>
-                          <span className="text-white text-xs">35 meters</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[#70AFE8] text-xs">Cabins:</span>
-                          <span className="text-white text-xs">5 luxury suites</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[#70AFE8] text-xs">Max Speed:</span>
-                          <span className="text-white text-xs">26 knots</span>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ) : (
-                  // Show regular vehicle images for other types
+                      </>
+                    )}
+                  </div>
+                </motion.div>
+                
+                {/* Show regular vehicle images for other types as a fallback */}
+                {(activeVehicle === 'helicopter' || activeVehicle === 'car') && (
                   vehicleImages[activeVehicle].map((src, index) => (
                     <motion.div 
                       key={src}
@@ -211,12 +207,6 @@ export default function LuxuryVehicleImageShowcase() {
                           filter: 'saturate(1.1) contrast(1.1)'
                         }}
                       />
-                      
-                      {/* Image loading fallback */}
-                      <div className="absolute inset-0 flex items-center justify-center text-[#D4AF37] text-opacity-50">
-                        {activeVehicle === 'helicopter' && 'Executive Helicopter Image'}
-                        {activeVehicle === 'car' && 'Premium Supercar Image'}
-                      </div>
                     </motion.div>
                   ))
                 )}
