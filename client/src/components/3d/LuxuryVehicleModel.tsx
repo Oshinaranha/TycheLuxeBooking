@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PremiumJetViewer } from '../ui/premium-jet-viewer';
+import { SimpleJetViewer } from '../ui/simple-jet-viewer';
 import { AnimatedPrivateJet } from '../AnimatedPrivateJet';
 import { AnimatedYacht } from '../AnimatedYacht';
 
@@ -15,15 +15,15 @@ export function LuxuryVehicleModel({ vehicleType, className = '' }: LuxuryVehicl
   if (vehicleType === 'jet') {
     return (
       <div className={`relative w-full h-full ${className}`}>
-        {/* Use our new premium jet viewer with sophisticated animations */}
+        {/* Use our premium jet viewer with luxury styling */}
         <div className="absolute inset-0" style={{ zIndex: isPremiumLoaded ? 10 : 0 }}>
-          <PremiumJetViewer 
+          <SimpleJetViewer 
             className="w-full h-full" 
             onLoad={() => setIsPremiumLoaded(true)} 
           />
         </div>
         
-        {/* Use the simple animation as fallback while premium content loads */}
+        {/* Use the enhanced animation as fallback while premium content loads */}
         <motion.div 
           className="absolute inset-0" 
           style={{ zIndex: isPremiumLoaded ? 0 : 10 }}

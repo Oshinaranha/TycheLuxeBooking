@@ -1,66 +1,28 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
-interface PremiumJetViewerProps {
+interface SimpleJetViewerProps {
   className?: string;
   onLoad?: () => void;
 }
 
-export function PremiumJetViewer({ className = '', onLoad }: PremiumJetViewerProps) {
-  const [loading, setLoading] = useState(true);
-  const containerRef = useRef<HTMLDivElement>(null);
-  
+export function SimpleJetViewer({ className = '', onLoad }: SimpleJetViewerProps) {
   // Use our premium jet image for the high-quality display
-  const premiumJetImage = '/images/vehicles/jet/premium-jet.jpg';
+  const premiumJetImage = '/images/vehicles/private-jet.png';
   
-  // Simplified loading
+  // Simple load effect
   useEffect(() => {
-    let mounted = true;
-    
-    // Load the premium jet image
-    const img = new Image();
-    img.src = premiumJetImage;
-    
-    img.onload = () => {
-      if (!mounted) return;
-      setLoading(false);
-      if (onLoad) onLoad();
-    };
-    
-    return () => {
-      mounted = false;
-    };
+    // Notify when component is loaded
+    if (onLoad) onLoad();
   }, [onLoad]);
   
   return (
-    <div 
-      ref={containerRef}
-      className={`relative overflow-hidden ${className}`}
-      style={{ position: 'relative', height: '100%', width: '100%' }}
-    >
+    <div className={`relative overflow-hidden ${className}`}>
       {/* Sleek background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a2e] to-[#16213e]"></div>
       
       {/* Dynamic lighting effects */}
       <div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-[#d4af37] opacity-10 blur-3xl rounded-full"></div>
       <div className="absolute bottom-[-5%] left-[-10%] w-[30%] h-[30%] bg-blue-400 opacity-10 blur-3xl rounded-full"></div>
-      
-      {/* Loading overlay */}
-      {loading && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-70 z-50">
-          <div className="w-64 h-2 bg-gray-800 rounded-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-gradient-to-r from-[#D4AF37] to-[#FFF5CC]"
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-            />
-          </div>
-          <p className="text-[#D4AF37] mt-4 font-light">
-            Loading Premium Jet View...
-          </p>
-        </div>
-      )}
       
       {/* Jet display area */}
       <div className="relative w-full h-full flex items-center justify-center">
