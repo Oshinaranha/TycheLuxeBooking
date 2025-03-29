@@ -7,7 +7,7 @@ interface SimpleJetViewerProps {
 
 export function SimpleJetViewer({ className = '', onLoad }: SimpleJetViewerProps) {
   // Use our premium jet image for the high-quality display
-  const premiumJetImage = '/images/vehicles/private-jet.png';
+  const premiumJetImage = '/images/vehicles/jet/premium-jet.jpg'; // Updated path to use image from jet directory
   
   // Simple load effect
   useEffect(() => {

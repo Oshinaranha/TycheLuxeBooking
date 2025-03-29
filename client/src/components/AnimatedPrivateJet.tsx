@@ -66,7 +66,7 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
     
     // Simulate image loading
     const img = new Image();
-    img.src = '/images/vehicles/private-jet.png';
+    img.src = '/images/vehicles/jet/angle-1.jpg';
     img.onload = () => setLoaded(true);
     
     return () => {
@@ -118,7 +118,7 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
         <motion.div
           className="w-full h-full bg-center bg-no-repeat bg-contain"
           style={{
-            backgroundImage: "url('/images/vehicles/private-jet.png')",
+            backgroundImage: "url('/images/vehicles/jet/angle-1.jpg')",
             backgroundSize: "contain"
           }}
           initial={{ opacity: 0 }}
@@ -177,7 +177,7 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
         <motion.div
           className="absolute bottom-[-50%] left-1/2 transform -translate-x-1/2 w-[70%] h-[50%] bg-center bg-no-repeat bg-contain opacity-20 blur-[1px]"
           style={{
-            backgroundImage: "url('/images/vehicles/private-jet.png')",
+            backgroundImage: "url('/images/vehicles/jet/angle-1.jpg')",
             backgroundSize: "contain",
             transform: "translate(-50%, 0) scaleY(-1)"
           }}
