@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { LuxuryJet3DViewer } from './LuxuryJet3DViewer';
+import { PremiumJetViewer } from '../ui/premium-jet-viewer';
 import { AnimatedPrivateJet } from '../AnimatedPrivateJet';
 import { AnimatedYacht } from '../AnimatedYacht';
 
@@ -10,27 +10,26 @@ interface LuxuryVehicleModelProps {
 }
 
 export function LuxuryVehicleModel({ vehicleType, className = '' }: LuxuryVehicleModelProps) {
-  const [is3DLoaded, setIs3DLoaded] = useState(false);
+  const [isPremiumLoaded, setIsPremiumLoaded] = useState(false);
   
   if (vehicleType === 'jet') {
     return (
       <div className={`relative w-full h-full ${className}`}>
-        {/* Since 3D is having issues, we'll add a forceShowFallback flag */}
-        {/* Use both components, with direct condition on opacity and z-index reversed */}
-        <div className="absolute inset-0" style={{ zIndex: is3DLoaded ? 10 : 0 }}>
-          <LuxuryJet3DViewer 
+        {/* Use our new premium jet viewer with sophisticated animations */}
+        <div className="absolute inset-0" style={{ zIndex: isPremiumLoaded ? 10 : 0 }}>
+          <PremiumJetViewer 
             className="w-full h-full" 
-            onLoad={() => setIs3DLoaded(true)} 
+            onLoad={() => setIsPremiumLoaded(true)} 
           />
         </div>
         
-        {/* Always show the 2D animation as fallback with opacity tied to 3D load state */}
+        {/* Use the simple animation as fallback while premium content loads */}
         <motion.div 
           className="absolute inset-0" 
-          style={{ zIndex: is3DLoaded ? 0 : 10 }}
+          style={{ zIndex: isPremiumLoaded ? 0 : 10 }}
           initial={{ opacity: 1 }}
-          animate={{ opacity: is3DLoaded ? 0 : 1 }}
-          transition={{ duration: 0.5 }}
+          animate={{ opacity: isPremiumLoaded ? 0 : 1 }}
+          transition={{ duration: 0.8 }}
         >
           <AnimatedPrivateJet className="w-full h-full" />
         </motion.div>
