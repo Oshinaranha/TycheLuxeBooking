@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import gsap from 'gsap';
+import luxuryJetImage from '@assets/image_1743231367967.png';
 
 interface AnimatedPrivateJetProps {
   className?: string;
@@ -66,7 +67,7 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
     
     // Simulate image loading
     const img = new Image();
-    img.src = '/images/vehicles/jet/angle-1.jpg';
+    img.src = luxuryJetImage;
     img.onload = () => setLoaded(true);
     
     return () => {
@@ -116,18 +117,20 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
       >
         {/* Luxury Jet Image with fade-in effect */}
         <motion.div
-          className="w-full h-full bg-center bg-no-repeat bg-contain"
-          style={{
-            backgroundImage: "url('/images/vehicles/jet/angle-1.jpg')",
-            backgroundSize: "contain"
-          }}
+          className="w-full h-full flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ 
             opacity: loaded ? 1 : 0,
             scale: loaded ? 1 : 0.95
           }}
           transition={{ duration: 0.8 }}
-        />
+        >
+          <img 
+            src={luxuryJetImage} 
+            alt="Luxury Private Jet"
+            className="w-full h-full object-contain"
+          />
+        </motion.div>
         
         {/* Engine effects - enhanced with animated glow */}
         <motion.div 
@@ -175,12 +178,7 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
         
         {/* Add reflection for water effect below */}
         <motion.div
-          className="absolute bottom-[-50%] left-1/2 transform -translate-x-1/2 w-[70%] h-[50%] bg-center bg-no-repeat bg-contain opacity-20 blur-[1px]"
-          style={{
-            backgroundImage: "url('/images/vehicles/jet/angle-1.jpg')",
-            backgroundSize: "contain",
-            transform: "translate(-50%, 0) scaleY(-1)"
-          }}
+          className="absolute bottom-[-50%] left-1/2 transform -translate-x-1/2 w-[70%] h-[50%] opacity-20 blur-[1px] flex justify-center"
           animate={{
             opacity: [0.1, 0.2, 0.1],
           }}
@@ -189,7 +187,13 @@ export function AnimatedPrivateJet({ className = '' }: AnimatedPrivateJetProps) 
             repeat: Infinity,
             ease: "easeInOut"
           }}
-        />
+        >
+          <img 
+            src={luxuryJetImage} 
+            alt="" 
+            className="h-full object-contain transform scale-y-[-1]"
+          />
+        </motion.div>
       </motion.div>
       
       {/* Gold accents for premium look */}

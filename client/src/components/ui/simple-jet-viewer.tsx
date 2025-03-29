@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
 
+// Use a static import to get the image path
+import luxuryJetImage from '@assets/image_1743231367967.png';
+
 interface SimpleJetViewerProps {
   className?: string;
   onLoad?: () => void;
@@ -7,7 +10,7 @@ interface SimpleJetViewerProps {
 
 export function SimpleJetViewer({ className = '', onLoad }: SimpleJetViewerProps) {
   // Use our premium jet image for the high-quality display
-  const premiumJetImage = '/images/vehicles/jet/premium-jet.jpg'; // Updated path to use image from jet directory
+  const premiumJetImage = '/images/luxury-jet.png'; // Direct path to our luxury jet image
   
   // Simple load effect
   useEffect(() => {
@@ -26,23 +29,22 @@ export function SimpleJetViewer({ className = '', onLoad }: SimpleJetViewerProps
       
       {/* Jet display area */}
       <div className="relative w-full h-full flex items-center justify-center">
-        {/* Jet image */}
-        <div
-          className="w-[80%] h-[80%] bg-center bg-no-repeat bg-contain"
-          style={{
-            backgroundImage: `url(${premiumJetImage})`
-          }}
+        {/* Jet image - using img tag directly */}
+        <img 
+          src={luxuryJetImage} 
+          alt="Luxury Private Jet"
+          className="w-[80%] h-[80%] object-contain"
+          onLoad={onLoad}
         />
         
         {/* Reflection effect */}
-        <div 
-          className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[70%] h-[20%] bg-center bg-no-repeat bg-contain opacity-20 blur-[1px]"
-          style={{
-            backgroundImage: `url(${premiumJetImage})`,
-            transform: "scaleY(-1)",
-            backgroundPosition: "center top"
-          }}
-        />
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[70%] h-[20%] opacity-20 blur-[1px] flex justify-center">
+          <img 
+            src={luxuryJetImage} 
+            alt="" 
+            className="h-full object-contain transform scale-y-[-1]"
+          />
+        </div>
         
         {/* Runways/stand markings */}
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gray-600 opacity-40" />
