@@ -25,24 +25,46 @@ export function LuxuryJet3DViewer({ className = '', onLoad }: LuxuryJet3DViewerP
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x282c34);
     
-    // Add ambient light
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    // Enhanced lighting setup for better visibility
+    
+    // Add stronger ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
     scene.add(ambientLight);
     
-    // Add directional light
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(5, 5, 5);
-    scene.add(directionalLight);
+    // Add main key light (like sun)
+    const mainLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    mainLight.position.set(5, 5, 2);
+    mainLight.castShadow = true;
+    // Improve shadow quality
+    mainLight.shadow.mapSize.width = 1024;
+    mainLight.shadow.mapSize.height = 1024;
+    mainLight.shadow.camera.near = 0.5;
+    mainLight.shadow.camera.far = 50;
+    scene.add(mainLight);
     
-    // Second directional light from the other side
-    const directionalLight2 = new THREE.DirectionalLight(0xd4af37, 0.8);
-    directionalLight2.position.set(-5, 3, -5);
-    scene.add(directionalLight2);
+    // Add warm fill light from opposite side (golden hour effect)
+    const fillLight = new THREE.DirectionalLight(0xffcc88, 0.8);
+    fillLight.position.set(-3, 2, -3);
+    scene.add(fillLight);
     
-    // Add point light for highlights
-    const pointLight = new THREE.PointLight(0xffffff, 1, 100);
-    pointLight.position.set(0, 5, 0);
-    scene.add(pointLight);
+    // Add blue-tinted rim light from below (like sky reflection)
+    const rimLight = new THREE.DirectionalLight(0x8888ff, 0.5);
+    rimLight.position.set(0, -3, 0);
+    scene.add(rimLight);
+    
+    // Add point light near cockpit for highlights
+    const cockpitLight = new THREE.PointLight(0xaaddff, 0.8, 10);
+    cockpitLight.position.set(2, 0.5, 0);
+    scene.add(cockpitLight);
+    
+    // Add point light at engines for engine glow effect
+    const engineLight1 = new THREE.PointLight(0xff5500, 0.5, 3);
+    engineLight1.position.set(-1.2, -0.1, -1.2);
+    scene.add(engineLight1);
+    
+    const engineLight2 = new THREE.PointLight(0xff5500, 0.5, 3);
+    engineLight2.position.set(-1.2, -0.1, 1.2);
+    scene.add(engineLight2);
     
     // Create camera
     const camera = new THREE.PerspectiveCamera(
@@ -53,15 +75,65 @@ export function LuxuryJet3DViewer({ className = '', onLoad }: LuxuryJet3DViewerP
     );
     camera.position.set(5, 2, 5);
     
-    // Create renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
-    // @ts-ignore - Three.js typings mismatch
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
-    renderer.shadowMap.enabled = true;
-    containerRef.current.appendChild(renderer.domElement);
+    // Create renderer with better error handling
+    let renderer: THREE.WebGLRenderer;
+    
+    try {
+      // First try to create a renderer with all features
+      renderer = new THREE.WebGLRenderer({ 
+        antialias: true, 
+        alpha: true,
+        powerPreference: 'high-performance',
+        preserveDrawingBuffer: true
+      });
+      
+      // Set renderer properties
+      renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
+      
+      // @ts-ignore - Three.js typings mismatch
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.0; // Slightly reduce exposure to prevent overbrightness
+      renderer.shadowMap.enabled = true;
+      
+      // Handle WebGL context loss
+      renderer.domElement.addEventListener('webglcontextlost', (event) => {
+        event.preventDefault();
+        console.log('WebGL context lost. Trying to restore...');
+        
+        // Show an error toast
+        toast({
+          title: "3D View Issue",
+          description: "Display problem detected. Trying to recover...",
+          variant: "destructive"
+        });
+        
+        // Force fallback to happen
+        setLoading(false);
+        if (onLoad) onLoad();
+      });
+      
+      containerRef.current.appendChild(renderer.domElement);
+    } catch (error) {
+      console.error('Error creating WebGL renderer:', error);
+      
+      // Create a simpler renderer as fallback
+      renderer = new THREE.WebGLRenderer({ 
+        antialias: false, 
+        alpha: true,
+        powerPreference: 'low-power'
+      });
+      renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+      
+      toast({
+        title: "Simplified 3D View",
+        description: "Using simplified graphics mode for better compatibility.",
+        variant: "default"
+      });
+      
+      containerRef.current.appendChild(renderer.domElement);
+    }
     
     // Add orbit controls for user interaction
     const controls = new OrbitControls(camera, renderer.domElement);
@@ -72,69 +144,138 @@ export function LuxuryJet3DViewer({ className = '', onLoad }: LuxuryJet3DViewerP
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.5;
     
-    // Create a simplified jet model with a few parts
+    // Create a more detailed and clearly recognizable jet model
     try {
       // Create group to hold all jet parts
       const jetGroup = new THREE.Group();
       
-      // Create body
-      const bodyGeometry = new THREE.BoxGeometry(2, 0.4, 0.4);
-      const bodyMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0xeeeeee,
-        shininess: 90
+      // Create fuselage (main body) - more elongated
+      const bodyGeometry = new THREE.CylinderGeometry(0.3, 0.3, 4, 16);
+      const bodyMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0xffffff,
+        metalness: 0.3,
+        roughness: 0.2
       });
       const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      body.rotation.z = Math.PI / 2; // Rotate to horizontal
       jetGroup.add(body);
       
-      // Create wings
-      const wingsGeometry = new THREE.BoxGeometry(0.8, 0.05, 1.6);
-      const wingsMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0xdddddd,
-        shininess: 70
+      // Create tapered nose cone
+      const noseGeometry = new THREE.ConeGeometry(0.3, 1, 16);
+      const noseMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0xffffff,
+        metalness: 0.3,
+        roughness: 0.2
+      });
+      const nose = new THREE.Mesh(noseGeometry, noseMaterial);
+      nose.rotation.z = -Math.PI / 2; // Rotate to point forward
+      nose.position.set(2, 0, 0);
+      jetGroup.add(nose);
+      
+      // Create main wings - more angled and realistic
+      const wingsGeometry = new THREE.BoxGeometry(1.5, 0.05, 3);
+      const wingsMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0xf0f0f0,
+        metalness: 0.2,
+        roughness: 0.3
       });
       const wings = new THREE.Mesh(wingsGeometry, wingsMaterial);
       wings.position.set(0, -0.1, 0);
+      // Add slight backward sweep to wings
+      wings.rotation.y = Math.PI * 0.03;
       jetGroup.add(wings);
       
-      // Create tail
-      const tailGeometry = new THREE.BoxGeometry(0.4, 0.4, 0.05);
-      const tailMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0xdddddd 
+      // Create vertical tail fin
+      const tailFinGeometry = new THREE.BoxGeometry(0.8, 0.8, 0.05);
+      const tailFinMaterial = new THREE.MeshStandardMaterial({ 
+        color: 0xf0f0f0,
+        metalness: 0.2,
+        roughness: 0.3
       });
-      const tail = new THREE.Mesh(tailGeometry, tailMaterial);
-      tail.position.set(-0.8, 0.15, 0);
-      jetGroup.add(tail);
+      const tailFin = new THREE.Mesh(tailFinGeometry, tailFinMaterial);
+      tailFin.position.set(-1.8, 0.5, 0);
+      jetGroup.add(tailFin);
       
-      // Create cockpit (nose)
-      const cockpitGeometry = new THREE.SphereGeometry(0.2, 16, 16);
-      const cockpitMaterial = new THREE.MeshPhongMaterial({
-        color: 0xaaccff,
+      // Create horizontal stabilizers (tail wings)
+      const stabilizerGeometry = new THREE.BoxGeometry(0.6, 0.05, 1.2);
+      const stabilizerMaterial = new THREE.MeshStandardMaterial({
+        color: 0xf0f0f0,
+        metalness: 0.2,
+        roughness: 0.3
+      });
+      const stabilizer = new THREE.Mesh(stabilizerGeometry, stabilizerMaterial);
+      stabilizer.position.set(-1.8, 0.1, 0);
+      jetGroup.add(stabilizer);
+      
+      // Create cockpit windows
+      const cockpitGeometry = new THREE.SphereGeometry(0.32, 16, 16, 0, Math.PI);
+      const cockpitMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0x88ccff,
         transparent: true,
-        opacity: 0.8,
-        shininess: 100
+        opacity: 0.7,
+        metalness: 0.2,
+        roughness: 0.1,
+        transmission: 0.5
       });
       const cockpit = new THREE.Mesh(cockpitGeometry, cockpitMaterial);
-      cockpit.position.set(1.0, 0, 0);
-      cockpit.scale.set(1, 0.7, 0.7);
+      cockpit.position.set(1.5, 0.15, 0);
+      cockpit.rotation.z = Math.PI / 2;
+      cockpit.rotation.y = Math.PI / 2;
+      cockpit.scale.set(1, 0.6, 0.7);
       jetGroup.add(cockpit);
       
-      // Create engines
-      const engineGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.5, 8);
-      const engineMaterial = new THREE.MeshPhongMaterial({
+      // Create engines - more detailed with intake and exhaust
+      const engineGeometry = new THREE.CylinderGeometry(0.2, 0.25, 1.2, 16);
+      const engineMaterial = new THREE.MeshStandardMaterial({
         color: 0x333333,
-        shininess: 30
+        metalness: 0.7,
+        roughness: 0.2
       });
       
       // Left engine
       const leftEngine = new THREE.Mesh(engineGeometry, engineMaterial);
       leftEngine.rotation.z = Math.PI / 2;
-      leftEngine.position.set(-0.3, -0.1, -0.6);
+      leftEngine.position.set(-0.5, -0.1, -1.2);
       jetGroup.add(leftEngine);
       
-      // Right engine
+      // Engine intake (left)
+      const intakeGeometry = new THREE.RingGeometry(0.05, 0.2, 16);
+      const intakeMaterial = new THREE.MeshStandardMaterial({
+        color: 0x222222,
+        side: THREE.DoubleSide
+      });
+      const leftIntake = new THREE.Mesh(intakeGeometry, intakeMaterial);
+      leftIntake.position.set(0.1, -0.1, -1.2);
+      leftIntake.rotation.y = Math.PI / 2;
+      jetGroup.add(leftIntake);
+      
+      // Engine exhaust (left) with glow
+      const exhaustGeometry = new THREE.RingGeometry(0.05, 0.2, 16);
+      const exhaustMaterial = new THREE.MeshStandardMaterial({
+        color: 0xff3300,
+        emissive: 0xff2200,
+        emissiveIntensity: 0.5,
+        side: THREE.DoubleSide
+      });
+      const leftExhaust = new THREE.Mesh(exhaustGeometry, exhaustMaterial);
+      leftExhaust.position.set(-1.1, -0.1, -1.2);
+      leftExhaust.rotation.y = Math.PI / 2;
+      jetGroup.add(leftExhaust);
+      
+      // Right engine (clone left)
       const rightEngine = leftEngine.clone();
-      rightEngine.position.set(-0.3, -0.1, 0.6);
+      rightEngine.position.set(-0.5, -0.1, 1.2);
       jetGroup.add(rightEngine);
+      
+      // Engine intake (right)
+      const rightIntake = leftIntake.clone();
+      rightIntake.position.set(0.1, -0.1, 1.2);
+      jetGroup.add(rightIntake);
+      
+      // Engine exhaust (right)
+      const rightExhaust = leftExhaust.clone();
+      rightExhaust.position.set(-1.1, -0.1, 1.2);
+      jetGroup.add(rightExhaust);
       
       // Add model to scene
       scene.add(jetGroup);
