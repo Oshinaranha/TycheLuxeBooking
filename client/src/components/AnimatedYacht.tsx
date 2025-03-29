@@ -74,7 +74,7 @@ export function AnimatedYacht({ className = '' }: AnimatedYachtProps) {
         <div
           className="w-full h-full bg-center bg-no-repeat bg-contain"
           style={{
-            backgroundImage: "url('/images/vehicles/yacht.png')",
+            backgroundImage: "url('/images/vehicles/yacht.svg')",
             backgroundSize: "contain"
           }}
         />

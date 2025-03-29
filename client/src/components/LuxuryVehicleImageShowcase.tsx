@@ -8,17 +8,17 @@ import { AnimatedYacht } from '@/components/AnimatedYacht';
 // Real luxury vehicle images
 const vehicleImages = {
   jet: [
-    '/images/jet-1.png',
-    '/images/jet-2.png',
+    '/images/jet-1.svg',
+    '/images/jet-2.svg',
   ],
   yacht: [
-    '/images/yacht-1.png',
+    '/images/yacht-1.svg',
   ],
   helicopter: [
-    '/images/helicopter-1.png',
+    '/images/helicopter-1.svg',
   ],
   car: [
-    '/images/car-1.png',
+    '/images/car-1.svg',
   ],
 };
 
