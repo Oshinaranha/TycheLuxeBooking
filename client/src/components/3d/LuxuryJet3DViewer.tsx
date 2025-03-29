@@ -9,9 +9,10 @@ import { motion } from 'framer-motion';
 
 interface LuxuryJet3DViewerProps {
   className?: string;
+  onLoad?: () => void;
 }
 
-export function LuxuryJet3DViewer({ className = '' }: LuxuryJet3DViewerProps) {
+export function LuxuryJet3DViewer({ className = '', onLoad }: LuxuryJet3DViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -20,9 +21,9 @@ export function LuxuryJet3DViewer({ className = '' }: LuxuryJet3DViewerProps) {
   useEffect(() => {
     if (!containerRef.current) return;
     
-    // Create scene
+    // Create scene with light background
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x111111);
+    scene.background = new THREE.Color(0x282c34);
     
     // Add ambient light
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -71,59 +72,95 @@ export function LuxuryJet3DViewer({ className = '' }: LuxuryJet3DViewerProps) {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.5;
     
-    // Load the model
-    const loader = new GLTFLoader();
-    
-    // Show loading progress
-    loader.load(
-      '/models/pilatus_pc24/scene.gltf',
-      (gltf) => {
-        const model = gltf.scene;
-        
-        // Center the model
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        model.position.sub(center);
-        
-        // Scale the model appropriately
-        const scaler = new THREE.Vector3();
-        box.getSize(scaler);
-        const maxDim = Math.max(scaler.x, scaler.y, scaler.z);
-        const scale = 3 / maxDim;
-        model.scale.set(scale, scale, scale);
-        
-        // Add to scene
-        scene.add(model);
-        setLoading(false);
-        
-        // Create an animation mixer when loaded
-        mixer = new THREE.AnimationMixer(model);
-        if (gltf.animations.length > 0) {
-          const action = mixer.clipAction(gltf.animations[0]);
-          action.play();
-        }
-        
-        // Set an initial cool camera angle
-        camera.position.set(4, 2, 4);
-        controls.update();
-      },
-      (progress) => {
-        // Update loading progress
-        if (progress.lengthComputable) {
-          const progressValue = Math.round((progress.loaded / progress.total) * 100);
-          setLoadingProgress(progressValue);
-        }
-      },
-      (error) => {
-        console.error('Error loading 3D model:', error);
-        toast({
-          title: "3D Model Error",
-          description: "Could not load the 3D model. Using fallback display.",
-          variant: "destructive"
-        });
-        setLoading(false);
-      }
-    );
+    // Create a simplified jet model with a few parts
+    try {
+      // Create group to hold all jet parts
+      const jetGroup = new THREE.Group();
+      
+      // Create body
+      const bodyGeometry = new THREE.BoxGeometry(2, 0.4, 0.4);
+      const bodyMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0xeeeeee,
+        shininess: 90
+      });
+      const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      jetGroup.add(body);
+      
+      // Create wings
+      const wingsGeometry = new THREE.BoxGeometry(0.8, 0.05, 1.6);
+      const wingsMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0xdddddd,
+        shininess: 70
+      });
+      const wings = new THREE.Mesh(wingsGeometry, wingsMaterial);
+      wings.position.set(0, -0.1, 0);
+      jetGroup.add(wings);
+      
+      // Create tail
+      const tailGeometry = new THREE.BoxGeometry(0.4, 0.4, 0.05);
+      const tailMaterial = new THREE.MeshPhongMaterial({ 
+        color: 0xdddddd 
+      });
+      const tail = new THREE.Mesh(tailGeometry, tailMaterial);
+      tail.position.set(-0.8, 0.15, 0);
+      jetGroup.add(tail);
+      
+      // Create cockpit (nose)
+      const cockpitGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+      const cockpitMaterial = new THREE.MeshPhongMaterial({
+        color: 0xaaccff,
+        transparent: true,
+        opacity: 0.8,
+        shininess: 100
+      });
+      const cockpit = new THREE.Mesh(cockpitGeometry, cockpitMaterial);
+      cockpit.position.set(1.0, 0, 0);
+      cockpit.scale.set(1, 0.7, 0.7);
+      jetGroup.add(cockpit);
+      
+      // Create engines
+      const engineGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.5, 8);
+      const engineMaterial = new THREE.MeshPhongMaterial({
+        color: 0x333333,
+        shininess: 30
+      });
+      
+      // Left engine
+      const leftEngine = new THREE.Mesh(engineGeometry, engineMaterial);
+      leftEngine.rotation.z = Math.PI / 2;
+      leftEngine.position.set(-0.3, -0.1, -0.6);
+      jetGroup.add(leftEngine);
+      
+      // Right engine
+      const rightEngine = leftEngine.clone();
+      rightEngine.position.set(-0.3, -0.1, 0.6);
+      jetGroup.add(rightEngine);
+      
+      // Add model to scene
+      scene.add(jetGroup);
+      
+      // Complete loading
+      setLoading(false);
+      setLoadingProgress(100);
+      
+      // Call the onLoad callback if provided
+      if (onLoad) onLoad();
+      
+      // Set an initial cool camera angle
+      camera.position.set(3, 2, 3);
+      controls.update();
+    } catch (error) {
+      console.error('Error creating 3D model:', error);
+      toast({
+        title: "3D Model Error",
+        description: "Could not create the 3D model. Using fallback display.",
+        variant: "destructive"
+      });
+      setLoading(false);
+      
+      // Call onLoad anyway so the fallback appears
+      if (onLoad) onLoad();
+    }
     
     // Handle zoom animations
     let zoomInterval: NodeJS.Timeout | null = null;
@@ -160,7 +197,7 @@ export function LuxuryJet3DViewer({ className = '' }: LuxuryJet3DViewerProps) {
     
     // Animation loop
     const clock = new THREE.Clock();
-    let mixer: THREE.AnimationMixer | null = null;
+    let mixer: any = null; // This needs to be defined before use
     
     const animate = () => {
       requestAnimationFrame(animate);
@@ -203,7 +240,7 @@ export function LuxuryJet3DViewer({ className = '' }: LuxuryJet3DViewerProps) {
       
       renderer.dispose();
     };
-  }, [toast]);
+  }, [toast, onLoad]);
   
   return (
     <div className={`relative w-full h-full ${className}`}>

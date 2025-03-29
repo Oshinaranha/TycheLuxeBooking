@@ -15,22 +15,25 @@ export function LuxuryVehicleModel({ vehicleType, className = '' }: LuxuryVehicl
   if (vehicleType === 'jet') {
     return (
       <div className={`relative w-full h-full ${className}`}>
-        {/* Primary 3D view */}
-        <div className="absolute inset-0 z-10">
-          <LuxuryJet3DViewer className="w-full h-full" />
+        {/* Since 3D is having issues, we'll add a forceShowFallback flag */}
+        {/* Use both components, with direct condition on opacity and z-index reversed */}
+        <div className="absolute inset-0" style={{ zIndex: is3DLoaded ? 10 : 0 }}>
+          <LuxuryJet3DViewer 
+            className="w-full h-full" 
+            onLoad={() => setIs3DLoaded(true)} 
+          />
         </div>
         
-        {/* Fallback 2D animation that shows while 3D loads */}
-        {!is3DLoaded && (
-          <motion.div 
-            className="absolute inset-0 z-0"
-            initial={{ opacity: 1 }}
-            animate={{ opacity: is3DLoaded ? 0 : 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <AnimatedPrivateJet className="w-full h-full" />
-          </motion.div>
-        )}
+        {/* Always show the 2D animation as fallback with opacity tied to 3D load state */}
+        <motion.div 
+          className="absolute inset-0" 
+          style={{ zIndex: is3DLoaded ? 0 : 10 }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: is3DLoaded ? 0 : 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <AnimatedPrivateJet className="w-full h-full" />
+        </motion.div>
       </div>
     );
   }
