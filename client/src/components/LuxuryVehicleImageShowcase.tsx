@@ -3,21 +3,22 @@ import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import { MagicButton } from '@/components/ui/magic-button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { AnimatedPrivateJet } from '@/components/AnimatedPrivateJet';
+import { AnimatedYacht } from '@/components/AnimatedYacht';
 
 // Real luxury vehicle images
 const vehicleImages = {
   jet: [
-    '/images/jet-1.svg',
-    '/images/jet-2.svg',
+    '/images/jet-1.png',
+    '/images/jet-2.png',
   ],
   yacht: [
-    '/images/yacht-1.svg',
+    '/images/yacht-1.png',
   ],
   helicopter: [
-    '/images/helicopter-1.svg',
+    '/images/helicopter-1.png',
   ],
   car: [
-    '/images/car-1.svg',
+    '/images/car-1.png',
   ],
 };
 
@@ -128,7 +129,7 @@ export default function LuxuryVehicleImageShowcase() {
                   <div className="absolute top-0 left-0 w-full h-full bg-grid-white-pattern rotate-12"></div>
                 </div>
                 
-                {/* Show the animated jet when in jet mode */}
+                {/* Show different animated vehicles based on selection */}
                 {activeVehicle === 'jet' ? (
                   <motion.div 
                     className="absolute inset-0 w-full h-full"
@@ -159,6 +160,36 @@ export default function LuxuryVehicleImageShowcase() {
                       </div>
                     </div>
                   </motion.div>
+                ) : activeVehicle === 'yacht' ? (
+                  <motion.div 
+                    className="absolute inset-0 w-full h-full"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
+                  >
+                    <AnimatedYacht className="w-full h-full" />
+                    
+                    {/* Yacht info overlay */}
+                    <div className="absolute bottom-12 left-8 right-8 p-5 bg-black bg-opacity-50 backdrop-blur-sm rounded-xl text-white">
+                      <h3 className="text-[#70AFE8] font-semibold mb-2 text-lg">Azimut Grande 35M</h3>
+                      <p className="text-xs md:text-sm opacity-90">Indulge in maritime luxury with our flagship yacht. Featuring 5 luxurious cabins, expansive entertainment areas, and a crew of 6 dedicated to your comfort.</p>
+                      <div className="flex justify-between mt-3 items-center">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[#70AFE8] text-xs">Length:</span>
+                          <span className="text-white text-xs">35 meters</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[#70AFE8] text-xs">Cabins:</span>
+                          <span className="text-white text-xs">5 luxury suites</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[#70AFE8] text-xs">Max Speed:</span>
+                          <span className="text-white text-xs">26 knots</span>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
                 ) : (
                   // Show regular vehicle images for other types
                   vehicleImages[activeVehicle].map((src, index) => (
@@ -183,7 +214,6 @@ export default function LuxuryVehicleImageShowcase() {
                       
                       {/* Image loading fallback */}
                       <div className="absolute inset-0 flex items-center justify-center text-[#D4AF37] text-opacity-50">
-                        {activeVehicle === 'yacht' && 'Luxury Yacht Image'}
                         {activeVehicle === 'helicopter' && 'Executive Helicopter Image'}
                         {activeVehicle === 'car' && 'Premium Supercar Image'}
                       </div>
@@ -191,18 +221,20 @@ export default function LuxuryVehicleImageShowcase() {
                   ))
                 )}
                 
-                {/* Image navigation dots */}
-                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
-                  {vehicleImages[activeVehicle].map((_, index) => (
-                    <button
-                      key={index}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                        index === currentImageIndex ? 'bg-[#D4AF37] w-4' : 'bg-white bg-opacity-50'
-                      }`}
-                      onClick={() => setCurrentImageIndex(index)}
-                    />
-                  ))}
-                </div>
+                {/* Image navigation dots - only show for non-animated vehicles */}
+                {activeVehicle !== 'jet' && activeVehicle !== 'yacht' && (
+                  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+                    {vehicleImages[activeVehicle].map((_, index) => (
+                      <button
+                        key={index}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                          index === currentImageIndex ? 'bg-[#D4AF37] w-4' : 'bg-white bg-opacity-50'
+                        }`}
+                        onClick={() => setCurrentImageIndex(index)}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>

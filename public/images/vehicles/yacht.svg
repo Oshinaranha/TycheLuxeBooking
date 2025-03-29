@@ -1,0 +1,53 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Luxury Yacht SVG -->
+  <defs>
+    <linearGradient id="hull" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#e0e0e0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Hull -->
+  <path d="M150,250 C200,260 600,260 650,250 L675,300 C625,320 225,320 125,300 Z" fill="url(#hull)" stroke="#999" stroke-width="2"/>
+  
+  <!-- Deck -->
+  <rect x="200" y="230" width="400" height="20" rx="5" fill="#ffffff" stroke="#999" stroke-width="1"/>
+  
+  <!-- Cabin Base -->
+  <rect x="250" y="180" width="300" height="50" rx="10" fill="#ffffff" stroke="#999" stroke-width="1"/>
+  
+  <!-- Upper Deck -->
+  <rect x="275" y="130" width="250" height="50" rx="8" fill="#ffffff" stroke="#999" stroke-width="1"/>
+  
+  <!-- Bridge -->
+  <rect x="300" y="90" width="200" height="40" rx="8" fill="#ffffff" stroke="#999" stroke-width="1"/>
+  
+  <!-- Windows -->
+  <g fill="#a8d8ff" stroke="#666" stroke-width="1">
+    <rect x="270" y="195" width="20" height="20" rx="2"/>
+    <rect x="310" y="195" width="20" height="20" rx="2"/>
+    <rect x="350" y="195" width="20" height="20" rx="2"/>
+    <rect x="390" y="195" width="20" height="20" rx="2"/>
+    <rect x="430" y="195" width="20" height="20" rx="2"/>
+    <rect x="470" y="195" width="20" height="20" rx="2"/>
+    <rect x="510" y="195" width="20" height="20" rx="2"/>
+    
+    <rect x="290" y="145" width="25" height="20" rx="2"/>
+    <rect x="335" y="145" width="25" height="20" rx="2"/>
+    <rect x="380" y="145" width="25" height="20" rx="2"/>
+    <rect x="425" y="145" width="25" height="20" rx="2"/>
+    <rect x="470" y="145" width="25" height="20" rx="2"/>
+    
+    <rect x="325" y="100" width="30" height="20" rx="2"/>
+    <rect x="375" y="100" width="30" height="20" rx="2"/>
+    <rect x="425" y="100" width="30" height="20" rx="2"/>
+  </g>
+  
+  <!-- Mast -->
+  <line x1="400" y1="90" x2="400" y2="50" stroke="#999" stroke-width="3"/>
+  
+  <!-- Railings -->
+  <path d="M200,230 L200,210 L600,210 L600,230" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="5,5"/>
+  <path d="M250,180 L250,160 L550,160 L550,180" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="5,5"/>
+  <path d="M275,130 L275,110 L525,110 L525,130" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="5,5"/>
+</svg>
